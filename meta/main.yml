@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Alex Kretzschmar
+  description: Removes Proxmox nag screen
+  issue_tracker_url: https://github.com/ironicbadger/ansible-role-proxmox-nag-removal/issues
+  license: GPLv2
+  min_ansible_version: 2.7
+  platforms:
+  - name: Debian
+    versions:
+    - all
+  categories:
+  - system
+  - web
