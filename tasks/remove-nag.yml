@@ -2,11 +2,13 @@
 
 - name: backup up original file
   copy:
+    remote_src: True
     src: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
-    dest: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js.bak
+    dest: "/usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js.bak-{{ lookup('pipe', 'date +%Y%m%d%H%M%SZ') }}"
 
 - name: modify line which performs license check
-  lineinfile:
+  replace:
     path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
-    regexp: 'if (data.status !== \'Active\') {'
-    line: 'if (False) {'
+    regexp: "data.status \\!== \\'Active\\'"
+    replace: "false"
+  notify: restart pveproxy
