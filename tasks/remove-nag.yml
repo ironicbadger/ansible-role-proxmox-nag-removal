@@ -1,0 +1,12 @@
+---
+
+- name: backup up original file
+  copy:
+    src: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+    dest: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js.bak
+
+- name: modify line which performs license check
+  lineinfile:
+    path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+    regexp: 'if (data.status !== 'Active') {'
+    line: 'if (False) {'

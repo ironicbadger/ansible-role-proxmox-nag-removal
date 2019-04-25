@@ -1,0 +1,9 @@
+---
+
+- name: removes subscription nag box
+  include: remove-nag.yml
+  when: remove_nag
+
+- name: remove enterprise repos
+  include: remove-enterprise-repo.yml
+  when: remove_enterprise_repo

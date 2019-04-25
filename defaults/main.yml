@@ -1,0 +1,4 @@
+---
+
+remove_nag: True
+remove_enterprise_repo: True

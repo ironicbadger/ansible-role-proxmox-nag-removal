@@ -1,0 +1,6 @@
+---
+
+- name: Ensure enterprise repo file is not present
+  file:
+    path: /etc/apt/source.list.d/pve-enterprise.list
+    state: absent
