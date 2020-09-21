@@ -3,6 +3,7 @@
 - name: Get pveversion for backup file
   shell: "pveversion | awk -F / '{print $2}'"
   register: pveversion
+  check_mode: no
 
 - name: backup up original file
   copy:
