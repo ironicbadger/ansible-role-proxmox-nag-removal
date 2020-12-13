@@ -1,20 +1,27 @@
 ---
+  
+  - name: Get pveversion for backup filename
+    shell: "pveversion | awk -F / '{print $2}'"
+    register: pveversion
+    check_mode: no
 
-- name: Get pveversion for backup file
-  shell: "pveversion | awk -F / '{print $2}'"
-  register: pveversion
-  check_mode: no
+  - name: check if backup file exists
+    stat:
+      path: "/usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js.bak-{{ pveversion.stdout }}"
+    register: file_result
+  
+  - name: make a backup of original file
+    copy:
+      remote_src: True
+      src: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+      dest: "/usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js.bak-{{ pveversion.stdout }}"
+    when: not file_result.stat.exists
 
-- name: backup up original file
-  copy:
-    remote_src: True
-    src: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
-    dest: "/usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js.bak-{{ pveversion.stdout }}"
-    force: no
-
-- name: modify line which performs license check
-  replace:
-    path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
-    regexp: "data.status \\!== \\'Active\\'"
-    replace: "false"
-  notify: restart pveproxy
+  # credit: https://johnscs.com/remove-proxmox51-subscription-notice/
+  - name: Modify line in file to remove nag message
+    shell: 
+      cmd: |
+        sed -Ezi.bak "s/(Ext.Msg.show\(\{\s+title: gettext\('No valid sub)/void\(\{ \/\/\1/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+    notify: restart pveproxy
+    when: not file_result.stat.exists
+  
