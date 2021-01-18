@@ -4,6 +4,7 @@
     shell: "pveversion | awk -F / '{print $2}'"
     register: pveversion
     check_mode: no
+    changed_when: false
 
   - name: check if backup file exists
     stat:
