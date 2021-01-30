@@ -1,15 +1,16 @@
 ---
-  
+
   - name: Get pveversion for backup filename
     shell: "pveversion | awk -F / '{print $2}'"
     register: pveversion
+    changed_when: false
     check_mode: no
 
   - name: check if backup file exists
     stat:
       path: "/usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js.bak-{{ pveversion.stdout }}"
     register: file_result
-  
+
   - name: make a backup of original file
     copy:
       remote_src: True
@@ -19,9 +20,8 @@
 
   # credit: https://johnscs.com/remove-proxmox51-subscription-notice/
   - name: Modify line in file to remove nag message
-    shell: 
+    shell:
       cmd: |
         sed -Ezi.bak "s/(Ext.Msg.show\(\{\s+title: gettext\('No valid sub)/void\(\{ \/\/\1/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
     notify: restart pveproxy
     when: not file_result.stat.exists
-  
