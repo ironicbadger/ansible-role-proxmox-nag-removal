@@ -9,5 +9,5 @@
   when: remove_enterprise_repo
 
 - name: add no subcription repo
-  include: add-no-subcription-repo.yml
+  include: add-no-subscription-repo.yml
   when: add_no_subscription_repo
