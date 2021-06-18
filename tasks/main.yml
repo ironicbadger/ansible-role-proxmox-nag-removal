@@ -4,6 +4,10 @@
   include: remove-nag.yml
   when: remove_nag
 
-- name: remove enterprise repos
+- name: remove enterprise repo
   include: remove-enterprise-repo.yml
   when: remove_enterprise_repo
+
+- name: add no subcription repo
+  include: add-no-subscription-repo.yml
+  when: add_no_subscription_repo

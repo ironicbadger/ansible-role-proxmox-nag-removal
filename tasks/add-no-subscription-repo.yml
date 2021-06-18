@@ -1,0 +1,6 @@
+---
+- name: Add No Subscription Repository
+  apt_repository:
+    repo: deb http://download.proxmox.com/debian/pve buster pve-no-subscription
+    filename: pve-no-subscription
+    state: present
