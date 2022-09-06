@@ -1,13 +1,13 @@
 ---
 
 - name: removes subscription nag box
-  include: remove-nag.yml
+  include_tasks: remove-nag.yml
   when: remove_nag
 
 - name: remove enterprise repo
-  include: remove-enterprise-repo.yml
+  include_tasks: remove-enterprise-repo.yml
   when: remove_enterprise_repo
 
 - name: add no subcription repo
-  include: add-no-subscription-repo.yml
+  include_tasks: add-no-subscription-repo.yml
   when: add_no_subscription_repo
