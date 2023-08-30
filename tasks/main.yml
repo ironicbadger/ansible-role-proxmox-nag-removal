@@ -10,6 +10,11 @@
     file: remove-enterprise-repo.yml
   when: remove_enterprise_repo
 
+- name: remove ceph repo
+  include_tasks:
+    file: remove-ceph-repo.yml
+  when: remove_ceph_repo
+
 - name: add no subcription repo
   include_tasks:
     file: add-no-subscription-repo.yml
