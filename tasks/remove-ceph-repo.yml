@@ -1,0 +1,6 @@
+---
+
+- name: Ensure ceph repo file is not present
+  file:
+    path: /etc/apt/sources.list.d/ceph.list
+    state: absent
